@@ -1,0 +1,59 @@
+rules:
+ - AddSemiAfterIfForWhileCondition
+#mid - AllocaInLoop
+ - ArgumentOfSizeofIsExpression
+ - ArrayIndexOutOfBound
+ - AssignInCondition
+ - AssignSameVariableTwiceSuccessively
+ - AssignWithUninitVariable
+ - AssignZeroValueToPointer
+ - BoolIncrement
+ - ClassAsStringArgument
+ - CmpFuncUseInCondition
+ - CompareBoolWithInt
+ - ComparePointerWithZeroValue
+ - ConstantValueWithZeroPrefix
+ - ConstResultAccordToValueRange
+ - DereferencingNullPointer
+ - DifferentEnumComparn
+ - DividingSizeofAPointerByAnotherValue
+ - ElseAlignWhichIfProblem
+ - EmptyExceptionHandler
+ - FormatStringIntoItselfInSprintf
+#error - IdenticalSubExprs
+ - IllegalThrowWithoutInTryCatchInDestructor
+ - InvalidPointToLocalArray
+ - InvalidPointToLocalVariable
+ - InvalidSizeOfArgumentArrayPoint
+ - IteratorsAsArgument
+ - LowerPriorityOfConditionalExpression
+ - MemFunCallLeadOverOrUnderFlowWithSizeof
+ - MissingSemicolonAfterReturn
+ - NonSensicalPointerComparn
+ - NoNullFunctionPointerComparedWithNull
+ - OddFloatPreciseComparision
+ - OddTypeCast
+ - PartOfConditionIsConstantValue
+ - PointerUnaryAndDerefConfuse
+ - RepeatedIfCondition
+ - SameArgumentForFuncCall
+ - SameVariableUseInForLoop
+ - StrlenConstantValueInMalloc
+#very slow - ThenAndElseBodyEquivalent
+ - TwoDimArrayToPointer
+#error# - TwoFunctionBodyEquivalent
+ - TwoSizeofMultiplied
+ - UnsignedValueMinusComapre
+ - UseCommaInArrayIndex
+ - UseUnSenseCommaInExpression
+ - WithoutUseReturnValueOfFunction
+ - WrongVariableComparedInForLoop
+ - WrongVariableIncreaseInForLoop
+#rulePaths:
+#rule-paths:
+#  ## - /home/fdh/oclint/build/oclint-rules/rules.dl
+#   ## - /home/fdh/oclint/build/oclint-release/lib/oclint/rules/
+output: oclint.html
+report-type: html
+#enable-global-analysis:false
+enable-clang-static-analyzer: false

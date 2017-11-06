@@ -1,0 +1,19 @@
+SET(LIST_OF_RULES
+    BitwiseOperatorInConditional
+    BrokenNullCheck
+    BrokenOddnessCheck
+    CollapsibleIfStatements
+    ConstantConditionalOperator
+    ConstantIfExpression
+    DeadCode
+    DoubleNegative
+    ForLoopShouldBeWhileLoop
+    GotoStatement
+    JumbledIncrementer
+    MisplacedNullCheck
+    MultipleUnaryOperator
+    ReturnFromFinallyBlock
+    ThrowExceptionFromFinallyBlock
+    )
+
+BUILD_DYNAMIC_RULES("${LIST_OF_RULES}")

@@ -1,0 +1,168 @@
+
+Compiler Errors:
+(please be aware that these errors will prevent OCLint from analyzing this source code)
+
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V502_sample.cpp:1:1: 'main' must return 'int'
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V503_sample.cpp:5:9: ordered comparison between pointer and zero ('int *' and 'int')
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V503_sample.cpp:9:11: ordered comparison between pointer and zero ('INTPTR' (aka 'int *') and 'int')
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V503_sample.cpp:13:12: ordered comparison between pointer and zero ('int *' and 'int')
+
+Compiler Warnings:
+
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V501_sample.cpp:26:9: comparison between NULL and non-pointer ('int' and NULL)
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V504_sample.cpp:13:1: control may reach end of non-void function
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V510_sample.cpp:9:38: format specifies type 'char *' but the argument has type 'const wchar_t *'
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V511_sample.cpp:3:5: expression result unused
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V511_sample.cpp:6:11: sizeof on array function parameter will return size of 'int *' instead of 'int [10]'
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V511_sample.cpp:6:5: expression result unused
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V511_sample.cpp:12:5: expression result unused
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V512_sample.cpp:27:28: 'memset' call operates on objects of type 'unit1' while the size is based on a different type 'unit1 *'
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V514_sample.cpp:6:14: expression result unused
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V514_sample.cpp:7:14: expression result unused
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V516_sample.cpp:8:9: address of function 'getCount' will always evaluate to 'true'
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V516_sample.cpp:11:8: comparison of function 'getCount' equal to a null pointer is always false
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V516_sample.cpp:14:8: comparison of function 'getCount' equal to a null pointer is always false
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V520_sample.cpp:6:19: expression result unused
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V520_sample.cpp:6:17: format specifies type 'int' but the argument has type 'int *'
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V522_sample.cpp:15:9: comparison of array 'array' equal to a null pointer is always false
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V527_sample.cpp:8:11: expression which evaluates to zero treated as a null pointer constant of type 'char *'
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V527_sample.cpp:9:11: expression which evaluates to zero treated as a null pointer constant of type 'char *'
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V529_sample.cpp:12:13: if statement has empty body
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V529_sample.cpp:4:26: for loop has empty body
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V529_sample.cpp:8:16: while loop has empty body
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V531_sample.cpp:3:20: expression result unused
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V532_sample.cpp:4:9: expression result unused
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V532_sample.cpp:5:9: expression result unused
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V547_sample.cpp:7:18: comparison of constant 239 with expression of type 'char' is always false
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V547_sample.cpp:8:18: comparison of constant 187 with expression of type 'char' is always false
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V547_sample.cpp:9:18: comparison of constant 191 with expression of type 'char' is always false
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V552_sample.cpp:4:9: incrementing expression of type bool is deprecated and incompatible with C++1z
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V556_sample.cpp:7:18: comparison of two values with different enumeration types ('EHAlign' and 'EVAlign')
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V557_sample.cpp:7:8: array index 10 is past the end of the array (which contains 10 elements)
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V560_sample.cpp:6:10: '&&' within '||'
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V560_sample.cpp:6:25: '&&' within '||'
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V562_sample.cpp:4:9: comparison of constant -1 with expression of type 'bool' is always true
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V563_sample.cpp:9:5: add explicit braces to avoid dangling else
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V563_sample.cpp:19:9: add explicit braces to avoid dangling else
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V568_sample.cpp:13:25: expression with side effects has no effect in an unevaluated context
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V568_sample.cpp:16:5: expression result unused
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V568_sample.cpp:21:5: expression result unused
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V568_sample.cpp:22:5: expression result unused
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V568_sample.cpp:28:5: expression result unused
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V568_sample.cpp:29:5: expression result unused
+
+
+OCLint Report
+
+Summary: TotalFiles=46 FilesWithViolations=40 P1=0 P2=0 P3=107 
+
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V501_sample.cpp:28:11: lower priority of conditional expression [custom|P3] Perhaps the '?:' operator works in a different way than it was expected.The '?:' operator has a lower priority than the '>' operator.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V504_sample.cpp:5:9: missing semicolon after return [custom|P3] It is highly probable that the semicolon ';' is missing after 'return' keyword.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V506_sample.cpp:6:9: assign same variable twice successively [custom|P3] The 'a' object is assigned values twice successively. Perhaps this is a mistake.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V506_sample.cpp:6:9: invalid point to local variable [custom|P3] Pointer to local variable 'b' is stored outside the scope of this variable. Such a pointer will become invalid.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V506_sample.cpp:7:9: invalid point to local variable [custom|P3] Pointer to local variable 'c' is stored outside the scope of this variable. Such a pointer will become invalid.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V507_sample.cpp:6:9: invalid point to local variable [custom|P3] Pointer to local variable 'b' is stored outside the scope of this variable. Such a pointer will become invalid.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V507_sample.cpp:6:9: invalid point to local array [custom|P3] Pointer to local array 'b' is stored outside the scope of this array. Such a pointer will become invalid.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V509_sample.cpp:10:6: empty exception handler [custom|P3] An empty exception handler. Silent suppression of exceptions can hide the presence of bugs in source code during testing.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V510_sample.cpp:9:5: without use return value of function [custom|P3] The return value of function 'printf' is required to be utilized.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V510_sample.cpp:13:5: without use return value of function [custom|P3] The return value of function 'sprintf' is required to be utilized.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V511_sample.cpp:6:5: invalid size of argument array point [custom|P3] The sizeof() operator returns size of the pointer, and not of the array, in 'sizeof(a)' expression.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V511_sample.cpp:3:5: argument of sizeof is expression [custom|P3] It's odd that the argument of sizeof() operator is the 'a' expression.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V511_sample.cpp:6:5: argument of sizeof is expression [custom|P3] It's odd that the argument of sizeof() operator is the 'a' expression.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V512_sample.cpp:8:5: without use return value of function [custom|P3] The return value of function 'memset' is required to be utilized.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V512_sample.cpp:9:5: without use return value of function [custom|P3] The return value of function 'memset' is required to be utilized.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V512_sample.cpp:14:5: without use return value of function [custom|P3] The return value of function 'memset' is required to be utilized.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V512_sample.cpp:15:5: without use return value of function [custom|P3] The return value of function 'memset' is required to be utilized.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V512_sample.cpp:20:5: without use return value of function [custom|P3] The return value of function 'memset' is required to be utilized.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V512_sample.cpp:21:5: without use return value of function [custom|P3] The return value of function 'memset' is required to be utilized.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V512_sample.cpp:27:5: without use return value of function [custom|P3] The return value of function 'memset' is required to be utilized.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V512_sample.cpp:28:5: without use return value of function [custom|P3] The return value of function 'memset' is required to be utilized.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V512_sample.cpp:35:5: without use return value of function [custom|P3] The return value of function 'memcpy' is required to be utilized.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V512_sample.cpp:36:5: without use return value of function [custom|P3] The return value of function 'memcpy' is required to be utilized.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V512_sample.cpp:27:21: argument of sizeof is expression [custom|P3] It's odd that the argument of sizeof() operator is the 'unit' expression.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V512_sample.cpp:8:5: mem fun call lead over or under flow with sizeof [custom|P3] A call of the 'memset' function will lead to a buffer overflow or underflow.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V512_sample.cpp:14:5: mem fun call lead over or under flow with sizeof [custom|P3] A call of the 'memset' function will lead to a buffer overflow or underflow.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V512_sample.cpp:20:5: mem fun call lead over or under flow with sizeof [custom|P3] A call of the 'memset' function will lead to a buffer overflow or underflow.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V512_sample.cpp:27:5: mem fun call lead over or under flow with sizeof [custom|P3] A call of the 'memset' function will lead to a buffer overflow or underflow.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V512_sample.cpp:35:5: mem fun call lead over or under flow with sizeof [custom|P3] A call of the 'memcpy' function will lead to a buffer overflow or underflow.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V514_sample.cpp:6:5: dividing sizeof a pointer by another value [custom|P3] Dividing sizeof a pointer 'sizeof(a)' by another value. There is a probability of logical error presence.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V514_sample.cpp:7:5: dividing sizeof a pointer by another value [custom|P3] Dividing sizeof a pointer 'sizeof(a)' by another value. There is a probability of logical error presence.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V514_sample.cpp:6:5: argument of sizeof is expression [custom|P3] It's odd that the argument of sizeof() operator is the 'a' expression.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V514_sample.cpp:7:5: argument of sizeof is expression [custom|P3] It's odd that the argument of sizeof() operator is the 'a' expression.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V516_sample.cpp:8:9: no null function pointer compared with null [custom|P3] Consider inspecting an odd expression. Non-null function pointer is compared to null: 'getCount'
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V516_sample.cpp:11:8: no null function pointer compared with null [custom|P3] Consider inspecting an odd expression. Non-null function pointer is compared to null: 'getCount==0'
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V516_sample.cpp:14:8: no null function pointer compared with null [custom|P3] Consider inspecting an odd expression. Non-null function pointer is compared to null: 'getCount==NULL'
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V517_sample.cpp:5:5: repeated if condition [custom|P3] The use of 'if (A) {...} else if (A) {...}' pattern was detected. There is a probability of logical error presence.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V518_sample.cpp:8:22: strlen constant value in malloc [custom|P3] The 'malloc' function allocates strange amount of memory calculated by 'strlen(src+1)'.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V518_sample.cpp:9:29: strlen constant value in malloc [custom|P3] The 'realloc' function allocates strange amount of memory calculated by 'strlen(src+1)'.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V518_sample.cpp:9:9: assign in condition [custom|P3] Suspicious assignment inside the condition expression of 'if' operator: p=(char *)realloc(p,strlen(src+1)).
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V518_sample.cpp:7:5: assign same variable twice successively [custom|P3] The 'p' object is assigned values twice successively. Perhaps this is a mistake.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V519_sample.cpp:4:5: assign same variable twice successively [custom|P3] The 'a' object is assigned values twice successively. Perhaps this is a mistake.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V520_sample.cpp:6:5: without use return value of function [custom|P3] The return value of function 'printf' is required to be utilized.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V520_sample.cpp:7:5: without use return value of function [custom|P3] The return value of function 'printf' is required to be utilized.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V520_sample.cpp:6:19: use un sense comma in expression [custom|P3] Such expressions using the ',' operator are dangerous. Make sure the expression is correct.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V520_sample.cpp:6:21: use un sense comma in expression [custom|P3] Such expressions using the ',' operator are dangerous. Make sure the expression is correct.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V520_sample.cpp:6:17: use comma in array index [custom|P3] The comma operator ',' in array index expression 'a[0,0]'.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V522_sample.cpp:25:5: repeated if condition [custom|P3] The use of 'if (A) {...} else if (A) {...}' pattern was detected. There is a probability of logical error presence.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V522_sample.cpp:23:5: without use return value of function [custom|P3] The return value of function 'printf' is required to be utilized.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V522_sample.cpp:10:9: dereferencing null pointer [custom|P3] Dereferencing of the null pointer 'pointer' might take place. Check the logical condition.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V522_sample.cpp:11:9: dereferencing null pointer [custom|P3] Dereferencing of the null pointer 'pointer' might take place. Check the logical condition.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V522_sample.cpp:12:9: dereferencing null pointer [custom|P3] Dereferencing of the null pointer 'pointer' might take place. Check the logical condition.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V522_sample.cpp:15:9: dereferencing null pointer [custom|P3] Dereferencing of the null pointer 'array' might take place. Check the logical condition.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V522_sample.cpp:17:8: dereferencing null pointer [custom|P3] Dereferencing of the null pointer 'DI' might take place. Check the logical condition.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V522_sample.cpp:23:18: dereferencing null pointer [custom|P3] Dereferencing of the null pointer 'DI' might take place. Check the logical condition.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V522_sample.cpp:28:22: dereferencing null pointer [custom|P3] Dereferencing of the null pointer 'DI' might take place. Check the logical condition.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V526_sample.cpp:4:8: cmp func use in condition [custom|P3] The 'strcmp' function returns 0 if corresponding strings are equal. Consider examining the condition for mistakes.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V526_sample.cpp:12:8: cmp func use in condition [custom|P3] The 'memcmp' function returns 0 if corresponding strings are equal. Consider examining the condition for mistakes.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V527_sample.cpp:8:5: assign zero value to pointer [custom|P3] It is odd that the '\0' value is assigned to 'char *' type pointer. Probably meant: *tag = '\0'.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V527_sample.cpp:9:5: assign zero value to pointer [custom|P3] It is odd that the '\0' value is assigned to 'char *' type pointer. Probably meant: *a.tag='\0'.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V529_sample.cpp:4:5: add semi after if for while condition [custom|P3] Odd semicolon ';' after 'for' operator.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V529_sample.cpp:8:5: add semi after if for while condition [custom|P3] Odd semicolon ';' after 'while' operator.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V529_sample.cpp:12:5: add semi after if for while condition [custom|P3] Odd semicolon ';' after 'if' operator.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V530_sample.cpp:8:5: without use return value of function [custom|P3] The return value of function 'num' is required to be utilized.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V530_sample.cpp:11:5: without use return value of function [custom|P3] The return value of function 'empty' is required to be utilized.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V531_sample.cpp:3:5: two sizeof multiplied [custom|P3] It is odd that a sizeof() operator is multiplied by sizeof().
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V532_sample.cpp:4:10: pointer unary and deref confuse [custom|P3] Consider inspecting the statement of '*pointer++' pattern. Probably meant: '(*pointer)++'.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V532_sample.cpp:5:10: pointer unary and deref confuse [custom|P3] Consider inspecting the statement of '*pointer++' pattern. Probably meant: '(*pointer)++'.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V534_sample.cpp:3:21: wrong variable compared in for loop [custom|P3] It is likely that a wrong variable is being compared inside the 'for' operator. Consider reviewing 'i'.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V535_sample.cpp:3:22: wrong variable increase in for loop [custom|P3] It is likely that a wrong variable is being incremented inside the 'for' operator. Consider reviewing 'i'.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V535_sample.cpp:3:13: same variable use in for loop [custom|P3] The variable 'i' is being used for this loop and for the outer loop.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V535_sample.cpp:3:17: wrong variable compared in for loop [custom|P3] It is likely that a wrong variable is being compared inside the 'for' operator. Consider reviewing 'i'.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V536_sample.cpp:4:13: constant value with zero prefix [custom|P3] Be advised that the utilized constant value is represented by an octal form.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V539_sample.cpp:4:26: iterators as argument [custom|P3] Consider inspecting iterators which are being passed as arguments to function 'test'.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V539_sample.cpp:8:5: iterators as argument [custom|P3] Consider inspecting iterators which are being passed as arguments to function 'erase'.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V541_sample.cpp:7:5: without use return value of function [custom|P3] The return value of function 'sprintf' is required to be utilized.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V541_sample.cpp:8:5: without use return value of function [custom|P3] The return value of function 'sprintf' is required to be utilized.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V541_sample.cpp:7:5: format string into itself in sprintf [custom|P3] It is dangerous to print the string 'buffer' into itself.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V541_sample.cpp:8:5: format string into itself in sprintf [custom|P3] It is dangerous to print the string 'str' into itself.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V542_sample.c:5:8: odd type cast [custom|P3] Consider inspecting an odd type cast: 'char *' to 'char'.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V547_sample.cpp:7:8: const result accord to value range [custom|P3] Expression 'pBytes[0] == 0xEF' is always false. The value range of signed char type: [-128, 127].
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V547_sample.cpp:8:8: const result accord to value range [custom|P3] Expression 'pBytes[1] == 0xBB' is always false. The value range of signed char type: [-128, 127].
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V547_sample.cpp:9:8: const result accord to value range [custom|P3] Expression 'pBytes[2] == 0xBF' is always false. The value range of signed char type: [-128, 127].
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V547_sample.cpp:24:9: const result accord to value range [custom|P3] Expression 'c < 0' is always false. Unsigned type value is always >= 0.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V547_sample.cpp:32:9: const result accord to value range [custom|P3] Expression '*s > 127' is always false. The value range of signed char type: [-128, 127].
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V548_sample.cpp:5:15: two dim array to pointer [custom|P3] Consider reviewing type casting. TYPE X[][] in not equivalent to TYPE **X.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V549_sample.cpp:7:5: same argument for func call [custom|P3] The first argument of 'test' function is equal to the second argument.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V550_sample.cpp:5:8: odd float precise comparision [custom|P3] An odd precise comparison: a==0.5. It's probably better to use a comparison with defined precision: fabs(A - B) '<' Epsilon.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V550_sample.cpp:6:8: odd float precise comparision [custom|P3] An odd precise comparison: b!=0.5. It's probably better to use a comparison with defined precision: fabs(A - B) '<' Epsilon.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V550_sample.cpp:7:8: odd float precise comparision [custom|P3] An odd precise comparison: a==1. It's probably better to use a comparison with defined precision: fabs(A - B) '<' Epsilon.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V552_sample.cpp:4:8: bool increment [custom|P3] A bool type variable is being incremented: a++. Perhaps another variable should be incremented instead.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V555_sample.cpp:4:8: unsigned value minus comapre [custom|P3] The expression 'a[0]-5>0' will work as 'a[0] != 5'.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V555_sample.cpp:6:8: unsigned value minus comapre [custom|P3] The expression 'a[0]-b>0' will work as 'a[0] != b'.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V557_sample.cpp:7:8: array index out of bound [custom|P3] Array overrun is possible. The '10' index is pointing beyond array bound.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V559_sample.cpp:9:11: assign in condition [custom|P3] Suspicious assignment inside the condition expression of 'if' operator: error->domain = 10 &&
+        error->code == 100.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V560_sample.cpp:6:22: part of condition is constant value [custom|P3] A part of conditional expression is always true: 12.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V562_sample.cpp:4:8: compare bool with int [custom|P3] It's odd to compare a bool type value with a value of -1: a>-1.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V563_sample.cpp:7:5: else align which if problem [custom|P3] It is possible that this 'else' branch must apply to the previous 'if' statement.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V565_sample.cpp:8:9: without use return value of function [custom|P3] The return value of function 'operator<<' is required to be utilized.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V565_sample.cpp:12:6: empty exception handler [custom|P3] An empty exception handler. Silent suppression of exceptions can hide the presence of bugs in source code during testing.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V568_sample.cpp:8:45: argument of sizeof is expression [custom|P3] It's odd that the argument of sizeof() operator is the 'this' expression.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V568_sample.cpp:8:65: argument of sizeof is expression [custom|P3] It's odd that the argument of sizeof() operator is the 'this' expression.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V568_sample.cpp:13:19: argument of sizeof is expression [custom|P3] It's odd that the argument of sizeof() operator is the 'A++' expression.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V568_sample.cpp:16:5: argument of sizeof is expression [custom|P3] It's odd that the argument of sizeof() operator is the 'buff - 1' expression.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V568_sample.cpp:21:5: argument of sizeof is expression [custom|P3] It's odd that the argument of sizeof() operator is the 'person' expression.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V568_sample.cpp:22:5: argument of sizeof is expression [custom|P3] It's odd that the argument of sizeof() operator is the 'animal' expression.
+/home/fdh/oclint/oclint-rules/command-test/V501_V560_Samples/V568_sample.cpp:27:21: argument of sizeof is expression [custom|P3] It's odd that the argument of sizeof() operator is the 'buff' expression.
+
+[OCLint (http://oclint.org) v0.12]
