@@ -6,26 +6,12 @@ using namespace std;
 int main()
 {
     int a, b, c, d;
-    if(a||a){
-        
-    }
-    
-    if(a||b||c||a){
-        
-    }
-    
-    if(a||(a)){
-    }
-    
-    if((a&&b)&&(c&&a)){
-    }
-    
-    if(a==MACRO1 || a==MACRO1){
-    }
-   
-    if(a==NULL||a=='\0'){
-    }
+    if(a||a){}
+    if(a||b||c||a){}
+    if(a||(a)){}
+    if((a&&b)&&(c&&a)){}
+    if(a==MACRO1 || a==MACRO1){}
+    if(a==NULL||a=='\0'){}
     c=MIN(a,a);
-    
-    
+    return 0;
 }
