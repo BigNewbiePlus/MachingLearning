@@ -1,0 +1,2 @@
+/usr/bin/ar qc libtest_helper.a  CMakeFiles/test_helper.dir/headers/TestRuleOnCode.cpp.o
+/usr/bin/ranlib libtest_helper.a

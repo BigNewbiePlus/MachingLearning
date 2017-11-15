@@ -1,0 +1,2 @@
+/usr/bin/ar qc libOCLintHelper.a  CMakeFiles/OCLintHelper.dir/AttributeHelper.cpp.o CMakeFiles/OCLintHelper.dir/EnforceHelper.cpp.o CMakeFiles/OCLintHelper.dir/SuppressHelper.cpp.o
+/usr/bin/ranlib libOCLintHelper.a

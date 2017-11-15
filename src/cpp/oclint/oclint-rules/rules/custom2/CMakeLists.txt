@@ -1,0 +1,24 @@
+
+SET(BuildTruncationOfConstantValueRule TruncationOfConstantValue)
+BUILD_DYNAMIC_RULES("${BuildTruncationOfConstantValueRule}")
+
+SET(BuildVariableIsAssignedToItselfRule VariableIsAssignedToItself)
+BUILD_DYNAMIC_RULES("${BuildVariableIsAssignedToItselfRule}")
+
+SET(BuildRecurringCheckRule RecurringCheck)
+BUILD_DYNAMIC_RULES("${BuildRecurringCheckRule}")
+
+SET(BuildFunctionReceivesAnOddArgumentRule FunctionReceivesAnOddArgument)
+BUILD_DYNAMIC_RULES("${BuildFunctionReceivesAnOddArgumentRule}")
+
+SET(BuildOddBitwiseOperationRule OddBitwiseOperation)
+BUILD_DYNAMIC_RULES("${BuildOddBitwiseOperationRule}")
+
+SET(BuildIdenticalAlongsideIfConditionRule IdenticalAlongsideIfCondition)
+BUILD_DYNAMIC_RULES("${BuildIdenticalAlongsideIfConditionRule}")
+
+SET(BuildSameReturnValueOfConditionalOperatorRule SameReturnValueOfConditionalOperator)
+BUILD_DYNAMIC_RULES("${BuildSameReturnValueOfConditionalOperatorRule}")
+
+SET(BuildSameValuePresentOnBothSideOfOperatorRule SameValuePresentOnBothSideOfOperator)
+BUILD_DYNAMIC_RULES("${BuildSameValuePresentOnBothSideOfOperatorRule}")

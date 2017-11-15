@@ -1,0 +1,15 @@
+BUILD_TEST(ConventionTests
+    AvoidBranchingStatementAsLastInLoopRuleTest.cpp
+    BaseClassDestructorShouldBeVirtualOrProtectedRuleTest.cpp
+    CoveredSwitchStatementsDontNeedDefaultRuleTest.cpp
+    DefaultLabelNotLastInSwitchStatementRuleTest.cpp
+    DestructorOfVirtualClassRuleTest.cpp
+    InvertedLogicRuleTest.cpp
+    MissingBreakInSwitchStatementRuleTest.cpp
+    NonCaseLabelInSwitchStatementRuleTest.cpp
+    ObjCAssignIvarOutsideAccessorsRuleTest.cpp
+    ParameterReassignmentRuleTest.cpp
+    PreferEarlyExitRuleTest.cpp
+    SwitchStatementsShouldHaveDefaultRuleTest.cpp
+    TooFewBranchesInSwitchStatementRuleTest.cpp
+)

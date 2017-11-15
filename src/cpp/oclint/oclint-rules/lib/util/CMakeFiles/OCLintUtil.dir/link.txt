@@ -1,0 +1,2 @@
+/usr/bin/ar qc libOCLintUtil.a  CMakeFiles/OCLintUtil.dir/ASTUtil.cpp.o CMakeFiles/OCLintUtil.dir/StdUtil.cpp.o
+/usr/bin/ranlib libOCLintUtil.a

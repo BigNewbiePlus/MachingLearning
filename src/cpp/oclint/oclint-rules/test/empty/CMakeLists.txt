@@ -1,0 +1,11 @@
+BUILD_TEST(EmptyTests
+    EmptyCatchStatementRuleTest.cpp
+    EmptyDoWhileStatementRuleTest.cpp
+    EmptyElseBlockRuleTest.cpp
+    EmptyFinallyStatementRuleTest.cpp
+    EmptyForStatementRuleTest.cpp
+    EmptyIfStatementRuleTest.cpp
+    EmptySwitchStatementRuleTest.cpp
+    EmptyTryStatementRuleTest.cpp
+    EmptyWhileStatementRuleTest.cpp
+)

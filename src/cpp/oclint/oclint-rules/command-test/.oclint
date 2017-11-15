@@ -50,9 +50,9 @@ rules:
  - WrongVariableComparedInForLoop
  - WrongVariableIncreaseInForLoop
 #rulePaths:
-#rule-paths:
+rule-paths:
 #  ## - /home/fdh/oclint/build/oclint-rules/rules.dl
-#   ## - /home/fdh/oclint/build/oclint-release/lib/oclint/rules/
+# - /home/fdh/oclint/build/oclint-release/lib/oclint/rules/
 output: oclint.html
 report-type: html
 #enable-global-analysis:false

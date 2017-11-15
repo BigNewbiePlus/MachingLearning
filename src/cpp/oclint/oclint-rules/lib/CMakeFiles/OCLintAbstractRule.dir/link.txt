@@ -1,0 +1,2 @@
+/usr/bin/ar qc libOCLintAbstractRule.a  CMakeFiles/OCLintAbstractRule.dir/AbstractASTMatcherRule.cpp.o CMakeFiles/OCLintAbstractRule.dir/AbstractASTRuleBase.cpp.o CMakeFiles/OCLintAbstractRule.dir/AbstractSourceCodeReaderRule.cpp.o
+/usr/bin/ranlib libOCLintAbstractRule.a
