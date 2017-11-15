@@ -22,3 +22,18 @@ BUILD_DYNAMIC_RULES("${BuildSameReturnValueOfConditionalOperatorRule}")
 
 SET(BuildSameValuePresentOnBothSideOfOperatorRule SameValuePresentOnBothSideOfOperator)
 BUILD_DYNAMIC_RULES("${BuildSameValuePresentOnBothSideOfOperatorRule}")
+
+SET(BuildFooFunctionCalledTwiceForDeallocationRule FooFunctionCalledTwiceForDeallocation)
+BUILD_DYNAMIC_RULES("${BuildFooFunctionCalledTwiceForDeallocationRule}")
+
+SET(BuildOddSequenceAssignOfABRule OddSequenceAssignOfAB)
+BUILD_DYNAMIC_RULES("${BuildOddSequenceAssignOfABRule}")
+
+SET(BuildOddOperatorOfEqualPlusRule OddOperatorOfEqualPlus)
+BUILD_DYNAMIC_RULES("${BuildOddOperatorOfEqualPlusRule}")
+
+SET(BuildExcessiveConditionExpressionRule ExcessiveConditionExpression)
+BUILD_DYNAMIC_RULES("${BuildExcessiveConditionExpressionRule}")
+
+SET(BuildNonVoidFunctionShouldReturnAValueRule NonVoidFunctionShouldReturnAValue)
+BUILD_DYNAMIC_RULES("${BuildNonVoidFunctionShouldReturnAValueRule}")

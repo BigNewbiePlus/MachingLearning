@@ -17,8 +17,23 @@
 #BUILD_TEST(IdenticalAlongsideIfConditionRuleTest
 #IdenticalAlongsideIfConditionRuleTest.cpp)
 
-BUILD_TEST(SameReturnValueOfConditionalOperatorRuleTest
-SameReturnValueOfConditionalOperatorRuleTest.cpp)
+#BUILD_TEST(SameReturnValueOfConditionalOperatorRuleTest
+#SameReturnValueOfConditionalOperatorRuleTest.cpp)
 
-BUILD_TEST(SameValuePresentOnBothSideOfOperatorRuleTest
-SameValuePresentOnBothSideOfOperatorRuleTest.cpp)
+#BUILD_TEST(SameValuePresentOnBothSideOfOperatorRuleTest
+#SameValuePresentOnBothSideOfOperatorRuleTest.cpp)
+
+#BUILD_TEST(FooFunctionCalledTwiceForDeallocationRuleTest
+#FooFunctionCalledTwiceForDeallocationRuleTest.cpp)
+
+#BUILD_TEST(OddSequenceAssignOfABRuleTest
+#OddSequenceAssignOfABRuleTest.cpp)
+
+#BUILD_TEST(OddOperatorOfEqualPlusRuleTest
+#OddOperatorOfEqualPlusRuleTest.cpp)
+
+#BUILD_TEST(ExcessiveConditionExpressionRuleTest
+#ExcessiveConditionExpressionRuleTest.cpp)
+
+BUILD_TEST(NonVoidFunctionShouldReturnAValueRuleTest
+NonVoidFunctionShouldReturnAValueRuleTest.cpp)

@@ -6,12 +6,12 @@ using namespace std;
 using namespace clang;
 using namespace oclint;
 
-class SameValuePresentOnBothSideOfOperatorRule : public AbstractASTVisitorRule<SameValuePresentOnBothSideOfOperatorRule>
+class FooFunctionCalledTwiceForDeallocationRule : public AbstractASTVisitorRule<FooFunctionCalledTwiceForDeallocationRule>
 {
 public:
     virtual const string name() const override
     {
-        return "same value present on both side of operator";
+        return "foo function called twice for deallocation";
     }
 
     virtual int priority() const override
@@ -78,44 +78,26 @@ public:
 #endif
 
     virtual void setUp() override {
-        sm = &_carrier->getSourceManager();
+        sm =&_carrier->getSourceManager();
     }
     virtual void tearDown() override {}
-    
-    void getOperandName(Expr* expr, vector<string>& operandNames){
-        if(isa<BinaryOperator>(expr)){
-            BinaryOperator* binaryOperator = dyn_cast_or_null<BinaryOperator>(expr);
-            BinaryOperatorKind bok = binaryOperator->getOpcode();
-            if(bok==BO_Add){
-                getOperandName(binaryOperator->getLHS(), operandNames);
-                getOperandName(binaryOperator->getRHS(), operandNames);
-                return;
-            }
-        }    
 
-        operandNames.push_back(expr2str(expr));
-    }
-
-    /* Visit IfStmt */
-    bool VisitIfStmt(IfStmt *ifStmt)
+    /* Visit CompoundStmt */
+    bool VisitCompoundStmt(CompoundStmt *compoundStmt)
     {
-        Expr* expr = ifStmt->getCond();
-        if(isa<BinaryOperator>(expr)){
-            BinaryOperator* binaryOperator = dyn_cast_or_null<BinaryOperator>(expr);
-            BinaryOperatorKind bok = binaryOperator->getOpcode();
-            if(bok==BO_LT || bok==BO_GT || bok==BO_LE || bok==BO_GE || bok==BO_EQ || bok==BO_NE){
-                vector<string> lhss, rhss;
-                getOperandName(binaryOperator->getLHS(), lhss);
-                getOperandName(binaryOperator->getRHS(), rhss);
-                if(lhss.size()+rhss.size()>2){
-                    for(auto lhs: lhss)
-                        for(auto rhs: rhss){
-                            if(lhs==rhs){
-                                string message = "The '"+lhs+"' value is present on both sides of the '"+BinaryOperator::getOpcodeStr(bok).str()+"' operator. The expression is incorrect or it can be simplified.";
-                                addViolation(ifStmt, this, message);
-                                return true;
-                            }
-                        }
+        map<string, int> objNames;
+        for(CompoundStmt::body_iterator it=compoundStmt->body_begin(); it!=compoundStmt->body_end(); it++){
+            if(isa<CXXMemberCallExpr>(*it)){
+                CXXMemberCallExpr* callExpr = dyn_cast_or_null<CXXMemberCallExpr>(*it);
+                string funcName = callExpr->getMethodDecl()->getNameInfo().getAsString();
+                if(funcName=="clear"){
+                    string objName = expr2str(callExpr->getImplicitObjectArgument());
+                    objNames[objName]++;
+                    if(objNames[objName]==2){
+                        string message = "The 'clear' function is called twice for deallocation of the same resource.";
+                        addViolation(*it, this, message);
+                        return true;
+                    }
                 }
             }
         }
@@ -130,8 +112,9 @@ public:
             return clang::Lexer::getSourceText(CharSourceRange::getCharRange(expr->getSourceRange()), *sm, LangOptions(), 0);
         return text; 
     }
+
 private:
     SourceManager* sm;
 };
 
-static RuleSet rules(new SameValuePresentOnBothSideOfOperatorRule());
+static RuleSet rules(new FooFunctionCalledTwiceForDeallocationRule()); 

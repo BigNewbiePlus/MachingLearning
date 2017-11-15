@@ -1,17 +1,16 @@
 #include "oclint/AbstractASTVisitorRule.h"
 #include "oclint/RuleSet.h"
 #include "clang/Lex/Lexer.h"
-
 using namespace std;
 using namespace clang;
 using namespace oclint;
 
-class SameValuePresentOnBothSideOfOperatorRule : public AbstractASTVisitorRule<SameValuePresentOnBothSideOfOperatorRule>
+class ExcessiveConditionExpressionRule : public AbstractASTVisitorRule<ExcessiveConditionExpressionRule>
 {
 public:
     virtual const string name() const override
     {
-        return "same value present on both side of operator";
+        return "excessive condition expression";
     }
 
     virtual int priority() const override
@@ -81,42 +80,29 @@ public:
         sm = &_carrier->getSourceManager();
     }
     virtual void tearDown() override {}
-    
-    void getOperandName(Expr* expr, vector<string>& operandNames){
+
+    bool getExprNameAndKind(Expr* expr, string& name, BinaryOperatorKind& bok){
         if(isa<BinaryOperator>(expr)){
             BinaryOperator* binaryOperator = dyn_cast_or_null<BinaryOperator>(expr);
-            BinaryOperatorKind bok = binaryOperator->getOpcode();
-            if(bok==BO_Add){
-                getOperandName(binaryOperator->getLHS(), operandNames);
-                getOperandName(binaryOperator->getRHS(), operandNames);
-                return;
+            bok = binaryOperator->getOpcode();
+            if(bok==BO_EQ||bok==BO_NE){
+                name = expr2str(binaryOperator->getLHS());
+                return true;
             }
-        }    
-
-        operandNames.push_back(expr2str(expr));
+        }
+        return false;
     }
-
-    /* Visit IfStmt */
-    bool VisitIfStmt(IfStmt *ifStmt)
+    /* Visit BinaryOperator */
+    bool VisitBinaryOperator(BinaryOperator *binaryOperator)
     {
-        Expr* expr = ifStmt->getCond();
-        if(isa<BinaryOperator>(expr)){
-            BinaryOperator* binaryOperator = dyn_cast_or_null<BinaryOperator>(expr);
-            BinaryOperatorKind bok = binaryOperator->getOpcode();
-            if(bok==BO_LT || bok==BO_GT || bok==BO_LE || bok==BO_GE || bok==BO_EQ || bok==BO_NE){
-                vector<string> lhss, rhss;
-                getOperandName(binaryOperator->getLHS(), lhss);
-                getOperandName(binaryOperator->getRHS(), rhss);
-                if(lhss.size()+rhss.size()>2){
-                    for(auto lhs: lhss)
-                        for(auto rhs: rhss){
-                            if(lhs==rhs){
-                                string message = "The '"+lhs+"' value is present on both sides of the '"+BinaryOperator::getOpcodeStr(bok).str()+"' operator. The expression is incorrect or it can be simplified.";
-                                addViolation(ifStmt, this, message);
-                                return true;
-                            }
-                        }
-                }
+        if(binaryOperator->getOpcode()==BO_LAnd){
+            string lname, rname;
+            BinaryOperatorKind lbok, rbok;
+            bool isSub1 = getExprNameAndKind(binaryOperator->getLHS(), lname, lbok);
+            bool isSub2 = getExprNameAndKind(binaryOperator->getRHS(), rname, rbok);
+            if(isSub1 && isSub2 && lname==rname && (lbok!=BO_NE || rbok!=BO_NE)){
+                string message = "Consider inspecting the '"+expr2str(binaryOperator)+"' expression. The expression is excessive or contains a misprint.";
+                addViolation(binaryOperator, this, message);
             }
         }
         return true;
@@ -134,4 +120,4 @@ private:
     SourceManager* sm;
 };
 
-static RuleSet rules(new SameValuePresentOnBothSideOfOperatorRule());
+static RuleSet rules(new ExcessiveConditionExpressionRule());

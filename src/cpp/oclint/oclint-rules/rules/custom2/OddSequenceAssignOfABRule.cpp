@@ -6,12 +6,12 @@ using namespace std;
 using namespace clang;
 using namespace oclint;
 
-class SameValuePresentOnBothSideOfOperatorRule : public AbstractASTVisitorRule<SameValuePresentOnBothSideOfOperatorRule>
+class OddSequenceAssignOfABRule : public AbstractASTVisitorRule<OddSequenceAssignOfABRule>
 {
 public:
     virtual const string name() const override
     {
-        return "same value present on both side of operator";
+        return "odd sequence assign of a b";
     }
 
     virtual int priority() const override
@@ -81,47 +81,31 @@ public:
         sm = &_carrier->getSourceManager();
     }
     virtual void tearDown() override {}
-    
-    void getOperandName(Expr* expr, vector<string>& operandNames){
-        if(isa<BinaryOperator>(expr)){
-            BinaryOperator* binaryOperator = dyn_cast_or_null<BinaryOperator>(expr);
-            BinaryOperatorKind bok = binaryOperator->getOpcode();
-            if(bok==BO_Add){
-                getOperandName(binaryOperator->getLHS(), operandNames);
-                getOperandName(binaryOperator->getRHS(), operandNames);
-                return;
-            }
-        }    
 
-        operandNames.push_back(expr2str(expr));
-    }
-
-    /* Visit IfStmt */
-    bool VisitIfStmt(IfStmt *ifStmt)
+    /* Visit CompoundStmt */
+    bool VisitCompoundStmt(CompoundStmt* compoundStmt)
     {
-        Expr* expr = ifStmt->getCond();
-        if(isa<BinaryOperator>(expr)){
-            BinaryOperator* binaryOperator = dyn_cast_or_null<BinaryOperator>(expr);
-            BinaryOperatorKind bok = binaryOperator->getOpcode();
-            if(bok==BO_LT || bok==BO_GT || bok==BO_LE || bok==BO_GE || bok==BO_EQ || bok==BO_NE){
-                vector<string> lhss, rhss;
-                getOperandName(binaryOperator->getLHS(), lhss);
-                getOperandName(binaryOperator->getRHS(), rhss);
-                if(lhss.size()+rhss.size()>2){
-                    for(auto lhs: lhss)
-                        for(auto rhs: rhss){
-                            if(lhs==rhs){
-                                string message = "The '"+lhs+"' value is present on both sides of the '"+BinaryOperator::getOpcodeStr(bok).str()+"' operator. The expression is incorrect or it can be simplified.";
-                                addViolation(ifStmt, this, message);
-                                return true;
-                            }
-                        }
+        string preLHS = "", preRHS="";
+        for(CompoundStmt::body_iterator it=compoundStmt->body_begin(); it!=compoundStmt->body_end(); it++){
+            string curLHS = "", curRHS="";
+            if(isa<BinaryOperator>(*it)){
+                BinaryOperator* binaryOperator = dyn_cast_or_null<BinaryOperator>(*it);
+                if(binaryOperator->getOpcode()==BO_Assign){
+                    curLHS = expr2str(binaryOperator->getLHS());
+                    curRHS = expr2str(binaryOperator->getRHS());
+                    if(curLHS==preRHS && curRHS==preLHS){
+                        string message ="An odd sequence of assignments of this kind: A = B; B = A;.";
+                        addViolation(*it, this, message);
+                        return true;
+                    }
                 }
             }
+            preLHS = curLHS;
+            preRHS = curRHS;
         }
         return true;
     }
-
+    
     string expr2str(Expr* expr){
         // (T, U) => "T,,"
         string text = clang::Lexer::getSourceText(
@@ -130,8 +114,9 @@ public:
             return clang::Lexer::getSourceText(CharSourceRange::getCharRange(expr->getSourceRange()), *sm, LangOptions(), 0);
         return text; 
     }
+
 private:
     SourceManager* sm;
 };
 
-static RuleSet rules(new SameValuePresentOnBothSideOfOperatorRule());
+static RuleSet rules(new OddSequenceAssignOfABRule());
