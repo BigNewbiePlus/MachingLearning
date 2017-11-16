@@ -37,3 +37,24 @@ BUILD_DYNAMIC_RULES("${BuildExcessiveConditionExpressionRule}")
 
 SET(BuildNonVoidFunctionShouldReturnAValueRule NonVoidFunctionShouldReturnAValue)
 BUILD_DYNAMIC_RULES("${BuildNonVoidFunctionShouldReturnAValueRule}")
+
+SET(BuildExpressionEnclosedByParenthesesTwiceRule ExpressionEnclosedByParenthesesTwice)
+BUILD_DYNAMIC_RULES("${BuildExpressionEnclosedByParenthesesTwiceRule}")
+
+SET(BuildAssignAndComparisionExpressionErrorRule AssignAndComparisionExpressionError)
+BUILD_DYNAMIC_RULES("${BuildAssignAndComparisionExpressionErrorRule}")
+
+SET(BuildArrayPointerAlwaysNotEqualNULLRule ArrayPointerAlwaysNotEqualNULL)
+BUILD_DYNAMIC_RULES("${BuildArrayPointerAlwaysNotEqualNULLRule}")
+
+SET(BuildUnsignedValueComparedToNegativeNumberRule UnsignedValueComparedToNegativeNumber)
+BUILD_DYNAMIC_RULES("${BuildUnsignedValueComparedToNegativeNumberRule}")
+
+SET(BuildOwnerlessTokenRule OwnerlessToken)
+BUILD_DYNAMIC_RULES("${BuildOwnerlessTokenRule}")
+
+SET(BuildOwnerlessExpressionRule OwnerlessExpression)
+BUILD_DYNAMIC_RULES("${BuildOwnerlessExpressionRule}")
+
+SET(BuildIncompatibleMemoryAllocationAndDeallocationMethodRule IncompatibleMemoryAllocationAndDeallocationMethod)
+BUILD_DYNAMIC_RULES("${BuildIncompatibleMemoryAllocationAndDeallocationMethodRule}")
