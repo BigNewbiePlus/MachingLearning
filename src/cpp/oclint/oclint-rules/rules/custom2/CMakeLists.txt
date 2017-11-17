@@ -58,3 +58,15 @@ BUILD_DYNAMIC_RULES("${BuildOwnerlessExpressionRule}")
 
 SET(BuildIncompatibleMemoryAllocationAndDeallocationMethodRule IncompatibleMemoryAllocationAndDeallocationMethod)
 BUILD_DYNAMIC_RULES("${BuildIncompatibleMemoryAllocationAndDeallocationMethodRule}")
+
+SET(BuildUnconditionalBreakWithinALoopRule UnconditionalBreakWithinALoop)
+BUILD_DYNAMIC_RULES("${BuildUnconditionalBreakWithinALoopRule}")
+
+SET(BuildBitwiseOperationWithZeroConstantValueRule BitwiseOperationWithZeroConstantValue)
+BUILD_DYNAMIC_RULES("${BuildBitwiseOperationWithZeroConstantValueRule}")
+
+SET(BuildBitwiseOperationWithNonZeroConstantValueRule BitwiseOperationWithNonZeroConstantValue)
+BUILD_DYNAMIC_RULES("${BuildBitwiseOperationWithNonZeroConstantValueRule}")
+
+SET(BuildInitAndFinalForIteratorValueAreSameRule InitAndFinalForIteratorValueAreSame)
+BUILD_DYNAMIC_RULES("${BuildInitAndFinalForIteratorValueAreSameRule}")

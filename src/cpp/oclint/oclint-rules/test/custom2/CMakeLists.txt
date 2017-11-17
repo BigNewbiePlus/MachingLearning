@@ -56,5 +56,17 @@
 #BUILD_TEST(OwnerlessExpressionRuleTest
 #OwnerlessExpressionRuleTest.cpp)
 
-BUILD_TEST(IncompatibleMemoryAllocationAndDeallocationMethodRuleTest
-IncompatibleMemoryAllocationAndDeallocationMethodRuleTest.cpp)
+#BUILD_TEST(IncompatibleMemoryAllocationAndDeallocationMethodRuleTest
+#IncompatibleMemoryAllocationAndDeallocationMethodRuleTest.cpp)
+
+#BUILD_TEST(UnconditionalBreakWithinALoopRuleTest
+#UnconditionalBreakWithinALoopRuleTest.cpp)
+
+#BUILD_TEST(BitwiseOperationWithZeroConstantValueRuleTest
+#BitwiseOperationWithZeroConstantValueRuleTest.cpp)
+
+#BUILD_TEST(BitwiseOperationWithNonZeroConstantValueRuleTest
+#BitwiseOperationWithNonZeroConstantValueRuleTest.cpp)
+
+BUILD_TEST(InitAndFinalForIteratorValueAreSameRuleTest
+InitAndFinalForIteratorValueAreSameRuleTest.cpp)
