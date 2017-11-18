@@ -21,23 +21,29 @@ class TreeNode:
         self.name = name
         self.count = count
         self.parent = parentNode
-        self.nodelink = None
+        self.nextlink = None
         self.children = {}
 
     def inc(self, count):
         self.count+=count
+    def disp(self, depth=1):
+        """disp(以文本形式展示树结构)
 
+        """
+        print ' '*depth, self.name,' ', self.count
+        for child in self.children.values():
+            child.disp(depth+1)
 
 def loadDataSet():
-    dataSet = [['a', 'b', 'c', 'd', 'e'],
-               ['a', 'b', 'c', 'd', 'e'],
-               ['z'],
-               ['a', 'c', 'd'],
-               ['a', 'b', 'z']]
+    dataSet = [['f', 'a', 'c', 'd', 'g', 'i', 'm', 'p'],
+               ['a', 'b', 'c', 'f', 'l', 'm', 'o'],
+               ['b', 'f', 'h', 'j', 'o'],
+               ['b', 'c', 'k', 's', 'p'],
+               ['a', 'f', 'c', 'e', 'l', 'p', 'm', 'n']]
 
     return dataSet
 
-def initDataSet(dataSet):
+def calDataSetCnt(dataSet):
     '''initDataSet(初始化数据，去除重复数据，使用计数)
 
     Args:
@@ -48,7 +54,7 @@ def initDataSet(dataSet):
     '''
 
     dataSetCnt = {}
-    for trans in dataSetCnt:
+    for trans in dataSet:
         if dataSetCnt.has_key(frozenset(trans)):
             dataSetCnt[frozenset(trans)]+=1
         else:
@@ -56,8 +62,16 @@ def initDataSet(dataSet):
 
     return dataSetCnt
 
+def updateTable(treeNode, item, FPHeaderTable):
+    headNode = FPHeaderTable[item][1]
+    if headNode is None:
+        FPHeaderTable[item][1]=treeNode
+    else:
+        while headNode.nextlink:
+            headNode = headNode.nextlink
+        headNode.nextlink= treeNode
 
-def updateTreeAndTable(orderItem, FPHeaderTable, FP):
+def updateTreeAndTable(orderItem, cnt, FPHeaderTable, FPTree):
     '''updateTreeAndTable(将排好序的单项条目添加到FP树和表格中)
 
     Args:
@@ -67,7 +81,15 @@ def updateTreeAndTable(orderItem, FPHeaderTable, FP):
 
     '''
 
+    treeNode = FPTree
     #递归调用树节点
+    for item in orderItem:
+        if treeNode.children.has_key(item):
+            treeNode.children[item].count+=cnt
+        else:
+            treeNode.children[item] = TreeNode(item, cnt, treeNode)
+            updateTable(treeNode.children[item], item, FPHeaderTable)
+        treeNode = treeNode.children[item]
 
 def buildTreeAndTable(dataSetCnt, minSupport=1):
     '''buildTreeAndTable(创建FP-Growth所需的树结构和表格)
@@ -81,34 +103,99 @@ def buildTreeAndTable(dataSetCnt, minSupport=1):
         FPTree 满足最小支持度的数据创建的树结构
     '''
 
-    #FP头表格
+    #创建FP表格
     FPHeaderTable={}
-    for trans in dataSetCnt:
+    for trans,cnt in dataSetCnt.items():
         for item in trans:
-            FPHeaderTable[item]=FPHeaderTable.get(item,0)+dataSetCnt[trans]
+            FPHeaderTable[item]=FPHeaderTable.get(item,0)+cnt
 
+    #print '过滤前：',FPHeaderTable
 
     #过滤掉低频数据
     FPHeaderTable = {k:[v,None] for k,v in FPHeaderTable.items() if v>=minSupport}
-    freqItemSet = set(itemCnt.keys())
 
-    if len(freqItem)==0:
+   # print 'FPTable:',FPHeaderTable
+    freqItemSet = set(FPHeaderTable.keys())
+   # print '频繁集合',freqItemSet
+    if len(freqItemSet)==0:
         return None, None
 
     #FP树
     FPTree = TreeNode("NULL", 1, None)
 
     #第二遍数据遍历
-    for trans,cnt in dataSetCnt:
+    for trans,cnt in dataSetCnt.items():
         localD = {}
         for item in trans:
             if item in freqItemSet:
                 localD[item] = FPHeaderTable[item][0]
 
+        #print 'localD', localD.keys()
+
         #存在可用数据
         if len(localD)>0:
-            orderItem = [k for k,v in sorted(localD.items(), key:lambda x:x[1], reverse=True)]
-            updateTreeAndTable(FPTree, FPHeaderTable, orderItem)
+            orderItem = [k for k,v in sorted(localD.items(), key=lambda x:x[1], reverse=True)]
+         #   print 'orderItem cnt:',cnt,' items:', orderItem
+            updateTreeAndTable(orderItem, cnt, FPHeaderTable, FPTree)
 
-    return FPHeaderTable, FPTree
+    return FPTree, FPHeaderTable
+
+
+def findPrefixPath(treeNode):
+    dataSetCnt= {}
+    headNode=treeNode
+    while headNode:
+        endNode = headNode.parent
+        newTrans = []
+        count = headNode.count
+        while endNode.parent:
+            newTrans.insert(0, endNode.name)
+            endNode = endNode.parent
+        dataSetCnt[frozenset(newTrans)]=count
+        headNode= headNode.nextlink
+    return dataSetCnt
+
+def FP_Growth(dataSetCnt, minSupport, prelist):
+    '''FP_Growth(挖掘频繁项集)
+
+    Args:
+        FPTable FP表
+        FPTree  FP树
+
+    Return 打印出挖掘的频繁项集
+    '''
+
+    FPTree, FPTable = buildTreeAndTable(dataSetCnt, minSupport)
+    if FPTable is None:
+        return
+
+    #print 'tree view:'
+    #FPTree.disp()
+
+    orderFPTable = [v[1] for k,v in sorted(FPTable.items(), key=lambda x:x[1][0])]
+    #print 'orderFPTable', [v.name for v in orderFPTable]
+#    print '******************************'
+    for tableNode in orderFPTable:
+        print tableNode.name, prelist
+    if len(orderFPTable):
+        print prelist
+ #   print '****************************'
+
+    for tableNode in orderFPTable:
+  #      print '遍历元素',tableNode.name
+        newDataSetCnt = findPrefixPath(tableNode)
+   #     print '元素',tableNode.name,'前数据', newDataSetCnt
+        newPrelist = [v for v in prelist]
+        newPrelist.append(tableNode.name)
+
+        FP_Growth(newDataSetCnt, minSupport, newPrelist)
+
+def main():
+    dataSet = loadDataSet();
+    dataSetCnt = calDataSetCnt(dataSet)
+    prelist= []
+    FP_Growth(dataSetCnt, 3, prelist)
+
+if __name__ == '__main__':
+    main()
 
