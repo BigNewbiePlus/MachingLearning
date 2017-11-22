@@ -6,12 +6,12 @@ using namespace std;
 using namespace clang;
 using namespace oclint;
 
-class InitAndFinalForIteratorValueAreSameRule : public AbstractASTVisitorRule<InitAndFinalForIteratorValueAreSameRule>
+class ImplicitlyCastFromIntegerToRealTypeRule : public AbstractASTVisitorRule<ImplicitlyCastFromIntegerToRealTypeRule>
 {
 public:
     virtual const string name() const override
     {
-        return "init and final for iterator value are same";
+        return "implicitly cast from integer to real type";
     }
 
     virtual int priority() const override
@@ -78,54 +78,32 @@ public:
 #endif
 
     virtual void setUp() override {
-        sm = &_carrier->getSourceManager();
+        sm=&_carrier->getSourceManager();
     }
     virtual void tearDown() override {}
 
-    string getInitValue(Stmt* init){
-        if(isa<BinaryOperator>(init)){
-            BinaryOperator* bo = dyn_cast_or_null<BinaryOperator>(init);
-            return expr2str(bo->getRHS());
-        }else if(isa<ExprWithCleanups>(init)){
-            ExprWithCleanups* ewc =dyn_cast_or_null<ExprWithCleanups>(init);
-            init = ewc->getSubExpr();
-            if(isa<CXXOperatorCallExpr>(init)){
-                CXXOperatorCallExpr* coce = dyn_cast_or_null<CXXOperatorCallExpr>(init);
-                return expr2str(coce->getArg(1));
+    /* Visit ImplicitCastExpr */
+    bool VisitImplicitCastExpr(ImplicitCastExpr *ice)
+    {
+        if(ice->getType()->isFloatingType()){
+            Expr* expr = ice->getSubExpr();
+            if(!expr->getType()->isIntegerType())return true;
+            if(isa<ParenExpr>(expr)){
+                ParenExpr* pe = dyn_cast_or_null<ParenExpr>(expr);
+                expr = pe->getSubExpr();
             }
-        }
-        else if(isa<DeclStmt>(init)){
-            DeclStmt* ds = dyn_cast_or_null<DeclStmt>(init);
-            if(ds->isSingleDecl()){
-                Decl* decl = ds->getSingleDecl();
-                if(isa<VarDecl>(decl)){
-                    VarDecl* varDecl = dyn_cast_or_null<VarDecl>(decl);
-                    if(varDecl->hasInit()){
-                        return expr2str(varDecl->getInit());
-                    }
+            if(isa<BinaryOperator>(expr)){
+                BinaryOperator* bo = dyn_cast_or_null<BinaryOperator>(expr);
+                if(bo->getOpcode()==BO_Div){    
+                    string message = "The '"+expr2str(expr)+"' expression was implicitly cast from 'int' type to 'double' type. Consider utilizing an explicit type cast to avoid the loss of a fractional part. An example: double A = (double)(X) / Y;";
+                    addViolation(ice, this, message);
                 }
             }
-        }
-        return "";
-    }
-    inline string getCondValue(Expr* cond){
-        return getInitValue(cond);
-    }
-    /* Visit ForStmt */
-    bool VisitForStmt(ForStmt* forStmt)
-    {
-        Stmt* init = forStmt->getInit();
-        Expr* cond = forStmt->getCond();
-        string initValue = getInitValue(init);
-        string condValue = getCondValue(cond);
-        
-        
-        if(initValue.size() && initValue==condValue){
-            string message = "Consider inspecting the 'for' operator. Initial and final values of the iterator are the same.";
-            addViolation(forStmt, this, message);
+
         }
         return true;
     }
+
     
     string expr2str(Expr* expr){
         // (T, U) => "T,,"
@@ -140,5 +118,4 @@ private:
     SourceManager* sm;
 };
 
-static RuleSet rules(new InitAndFinalForIteratorValueAreSameRule());
-    
+static RuleSet rules(new ImplicitlyCastFromIntegerToRealTypeRule());

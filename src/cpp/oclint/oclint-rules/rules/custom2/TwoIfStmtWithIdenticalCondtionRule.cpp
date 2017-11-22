@@ -6,12 +6,12 @@ using namespace std;
 using namespace clang;
 using namespace oclint;
 
-class InitAndFinalForIteratorValueAreSameRule : public AbstractASTVisitorRule<InitAndFinalForIteratorValueAreSameRule>
+class TwoIfStmtWithIdenticalCondtionRule : public AbstractASTVisitorRule<TwoIfStmtWithIdenticalCondtionRule>
 {
 public:
     virtual const string name() const override
     {
-        return "init and final for iterator value are same";
+        return "two if stmt with identical condtion";
     }
 
     virtual int priority() const override
@@ -78,55 +78,41 @@ public:
 #endif
 
     virtual void setUp() override {
-        sm = &_carrier->getSourceManager();
+        sm=&_carrier->getSourceManager();
     }
     virtual void tearDown() override {}
 
-    string getInitValue(Stmt* init){
-        if(isa<BinaryOperator>(init)){
-            BinaryOperator* bo = dyn_cast_or_null<BinaryOperator>(init);
-            return expr2str(bo->getRHS());
-        }else if(isa<ExprWithCleanups>(init)){
-            ExprWithCleanups* ewc =dyn_cast_or_null<ExprWithCleanups>(init);
-            init = ewc->getSubExpr();
-            if(isa<CXXOperatorCallExpr>(init)){
-                CXXOperatorCallExpr* coce = dyn_cast_or_null<CXXOperatorCallExpr>(init);
-                return expr2str(coce->getArg(1));
+    bool hasReturnStmt(Stmt* stmt){
+        if(isa<ReturnStmt>(stmt))return true;
+        if(isa<CompoundStmt>(stmt)){
+            CompoundStmt* cs = dyn_cast_or_null<CompoundStmt>(stmt);
+            for(CompoundStmt::body_iterator it=cs->body_begin(); it!=cs->body_end();it++){
+                if(isa<ReturnStmt>(*it))return true;
             }
         }
-        else if(isa<DeclStmt>(init)){
-            DeclStmt* ds = dyn_cast_or_null<DeclStmt>(init);
-            if(ds->isSingleDecl()){
-                Decl* decl = ds->getSingleDecl();
-                if(isa<VarDecl>(decl)){
-                    VarDecl* varDecl = dyn_cast_or_null<VarDecl>(decl);
-                    if(varDecl->hasInit()){
-                        return expr2str(varDecl->getInit());
-                    }
-                }
-            }
-        }
-        return "";
+        return false;
     }
-    inline string getCondValue(Expr* cond){
-        return getInitValue(cond);
-    }
-    /* Visit ForStmt */
-    bool VisitForStmt(ForStmt* forStmt)
+
+    /* Visit CompoundStmt */
+    bool VisitCompoundStmt(CompoundStmt *cs)
     {
-        Stmt* init = forStmt->getInit();
-        Expr* cond = forStmt->getCond();
-        string initValue = getInitValue(init);
-        string condValue = getCondValue(cond);
-        
-        
-        if(initValue.size() && initValue==condValue){
-            string message = "Consider inspecting the 'for' operator. Initial and final values of the iterator are the same.";
-            addViolation(forStmt, this, message);
+        set<string> return_conds;
+        for(CompoundStmt::body_iterator it=cs->body_begin(); it!=cs->body_end(); it++){
+            if(isa<IfStmt>(*it)){
+                IfStmt* is = dyn_cast_or_null<IfStmt>(*it);
+                string cond = expr2str(is->getCond());
+                if(return_conds.find(cond)!=return_conds.end()){
+                    string message = "There are two 'if' statements with identical conditional expressions. The first 'if' statement contains function return. This means that the second 'if' statement is senseless.";
+                    addViolation(*it, this, message);
+                }
+                if(hasReturnStmt(is->getThen())){
+                    return_conds.insert(cond);
+                }
+
+            }
         }
         return true;
     }
-    
     string expr2str(Expr* expr){
         // (T, U) => "T,,"
         string text = clang::Lexer::getSourceText(
@@ -135,10 +121,8 @@ public:
             return clang::Lexer::getSourceText(CharSourceRange::getCharRange(expr->getSourceRange()), *sm, LangOptions(), 0);
         return text; 
     }
-
 private:
     SourceManager* sm;
 };
 
-static RuleSet rules(new InitAndFinalForIteratorValueAreSameRule());
-    
+static RuleSet rules(new TwoIfStmtWithIdenticalCondtionRule());

@@ -70,3 +70,54 @@ BUILD_DYNAMIC_RULES("${BuildBitwiseOperationWithNonZeroConstantValueRule}")
 
 SET(BuildInitAndFinalForIteratorValueAreSameRule InitAndFinalForIteratorValueAreSame)
 BUILD_DYNAMIC_RULES("${BuildInitAndFinalForIteratorValueAreSameRule}")
+
+SET(BuildMisprintsCommaForSemicolonRule MisprintsCommaForSemicolon)
+BUILD_DYNAMIC_RULES("${BuildMisprintsCommaForSemicolonRule}")
+
+SET(BuildArgumentOfSizeofIsNumberRule ArgumentOfSizeofIsNumber)
+BUILD_DYNAMIC_RULES("${BuildArgumentOfSizeofIsNumberRule}")
+
+SET(BuildAbsolutePathToFileAndDirUsedRule AbsolutePathToFileAndDirUsed)
+BUILD_DYNAMIC_RULES("${BuildAbsolutePathToFileAndDirUsedRule}")
+
+SET(BuildBitShiftOperatorLowPriorityRule BitShiftOperatorLowPriority)
+BUILD_DYNAMIC_RULES("${BuildBitShiftOperatorLowPriorityRule}")
+
+SET(BuildImplicitlyCastFromIntegerToRealTypeRule ImplicitlyCastFromIntegerToRealType)
+BUILD_DYNAMIC_RULES("${BuildImplicitlyCastFromIntegerToRealTypeRule}")
+
+SET(BuildOperationLogicNotCorrespondWithItsFormatRule OperationLogicNotCorrespondWithItsFormat)
+BUILD_DYNAMIC_RULES("${BuildOperationLogicNotCorrespondWithItsFormatRule}")
+
+SET(BuildElseKeywordMissedAccodingToItsFormatRule ElseKeywordMissedAccodingToItsFormat)
+BUILD_DYNAMIC_RULES("${BuildElseKeywordMissedAccodingToItsFormatRule}")
+
+SET(BuildTwoIfStmtWithIdenticalCondtionRule TwoIfStmtWithIdenticalCondtion)
+BUILD_DYNAMIC_RULES("${BuildTwoIfStmtWithIdenticalCondtionRule}")
+
+SET(BuildOperationExecuted3TimesInSuccessionRule OperationExecuted3TimesInSuccession)
+BUILD_DYNAMIC_RULES("${BuildOperationExecuted3TimesInSuccessionRule}")
+
+SET(BuildStringOfTwoPartsUsedForArrayInitializationRule StringOfTwoPartsUsedForArrayInitialization)
+BUILD_DYNAMIC_RULES("${BuildStringOfTwoPartsUsedForArrayInitializationRule}")
+
+SET(BuildConditionOfLoopAlwaysTrueOrFalseRule ConditionOfLoopAlwaysTrueOrFalse)
+BUILD_DYNAMIC_RULES("${BuildConditionOfLoopAlwaysTrueOrFalseRule}")
+
+SET(BuildStringsWereConcatenatedButNotUtilizedRule StringsWereConcatenatedButNotUtilized)
+BUILD_DYNAMIC_RULES("${BuildStringsWereConcatenatedButNotUtilizedRule}")
+
+SET(BuildVariablesInitializedThroughSameFunctionCallRule VariablesInitializedThroughSameFunctionCall)
+BUILD_DYNAMIC_RULES("${BuildVariablesInitializedThroughSameFunctionCallRule}")
+
+SET(BuildIteratorInitAndFinalValueDifferInForLoopRule IteratorInitAndFinalValueDifferInForLoop)
+BUILD_DYNAMIC_RULES("${BuildIteratorInitAndFinalValueDifferInForLoopRule}")
+
+SET(BuildNoSenseTestPointerAgainstNullAsMemAlloUseNewRule NoSenseTestPointerAgainstNullAsMemAlloUseNew)
+BUILD_DYNAMIC_RULES("${BuildNoSenseTestPointerAgainstNullAsMemAlloUseNewRule}")
+
+SET(BuildSuspiciousMixOfIntegerAndRealExpressionRule SuspiciousMixOfIntegerAndRealExpression)
+BUILD_DYNAMIC_RULES("${BuildSuspiciousMixOfIntegerAndRealExpressionRule}")
+
+SET(BuildPatternAOrAExpressionIsExecessiveRule PatternAOrAExpressionIsExecessive)
+BUILD_DYNAMIC_RULES("${BuildPatternAOrAExpressionIsExecessiveRule}")
