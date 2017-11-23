@@ -1,7 +1,6 @@
 int main()
 {
     bool tipsel, rootsel;
-
     if ((tipsel && rootsel) || (rootsel)) {}
     
     bool tm_mday, cfg_start_day, before;
