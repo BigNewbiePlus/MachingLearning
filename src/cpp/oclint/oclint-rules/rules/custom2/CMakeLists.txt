@@ -145,3 +145,18 @@ BUILD_DYNAMIC_RULES("${BuildSuspiciousComparisionPatternWithAEqualBEqualCRule}")
 
 SET(BuildCreateSameLocalVariableAsControlVariableWithinLoopRule CreateSameLocalVariableAsControlVariableWithinLoop)
 BUILD_DYNAMIC_RULES("${BuildCreateSameLocalVariableAsControlVariableWithinLoopRule}")
+
+SET(BuildFreeArrayMemoryRule FreeArrayMemory)
+BUILD_DYNAMIC_RULES("${BuildFreeArrayMemoryRule}")
+
+SET(BuildUnaryMinusCanntModifyBoolValueRule UnaryMinusCanntModifyBoolValue)
+BUILD_DYNAMIC_RULES("${BuildUnaryMinusCanntModifyBoolValueRule}")
+
+SET(BuildMacroExpansionResultIncorrectOrderRule MacroExpansionResultIncorrectOrder)
+BUILD_DYNAMIC_RULES("${BuildMacroExpansionResultIncorrectOrderRule}")
+
+SET(BuildCommaMissingInIntArrayInitRule CommaMissingInIntArrayInit)
+BUILD_DYNAMIC_RULES("${BuildCommaMissingInIntArrayInitRule}")
+
+SET(BuildSuspiciousCompoundAssignmentExpressionRule SuspiciousCompoundAssignmentExpression)
+BUILD_DYNAMIC_RULES("${BuildSuspiciousCompoundAssignmentExpressionRule}")
