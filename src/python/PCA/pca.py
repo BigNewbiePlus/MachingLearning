@@ -50,24 +50,23 @@ def pca(dataMat, topNFeats=999):
     convMat = eigVec[:,eigInd]
     #print("转制矩阵",convMat)
     # 获取降维数据
-    convDataMat = meanRM*convMat
+    lowDataMat = meanRM*convMat
     #print("转制数据矩阵", convDataMat)
-    reconDataMat = convDataMat*convMat.T+meanVal
+    reconDataMat = lowDataMat*convMat.T+meanVal
     #print("重构数据矩阵", reconDataMat)
-    return convDataMat, reconDataMat
+    return lowDataMat, reconDataMat
 
-def show_picture(dataMat, convDataMat, reconDataMat):
+def show_picture(dataMat, reconDataMat, lowDataMat):
     #画出三个数据的两维数据，包括原始数据，转置数据，重构数据
     #print("降维矩阵:", convDataMat)
     #print("重构矩阵:", reconDataMat)
     numSamp = np.shape(dataMat)[0]
     fig = plt.figure()
-    ax = fig.add_subplot(221)
+    ax = fig.add_subplot(111)
     ax.scatter(dataMat[:,0].A.reshape(numSamp), dataMat[:,1].A.reshape(numSamp), marker='^', s=90)
-    ax = fig.add_subplot(222)
-    ax.scatter(convDataMat[:,0].A.reshape(numSamp), convDataMat[:,1].A.reshape(numSamp), marker='o', s=50, c='red')
-    ax = fig.add_subplot(223)
-    ax.scatter(reconDataMat[:,0].A.reshape(numSamp), reconDataMat[:,1].A.reshape(numSamp)+1, marker='*', s=30, c='green')
+    ax.scatter(reconDataMat[:,0].A.reshape(numSamp), reconDataMat[:,1].A.reshape(numSamp), marker='o', s=50, c='red')
+    #ax = fig.add_subplot(223)
+    ax.scatter(lowDataMat[:,0].A.reshape(numSamp), lowDataMat[:,1].A.reshape(numSamp), marker='*', s=30)
     plt.show()
 
 
@@ -108,8 +107,9 @@ def main():
     #dataMat = np.mat([[1,np.nan,3,4],[np.nan,4,5,6], [5,6,7, np.nan]])
     replaceNanWithMean(dataMat)
     analysis_data(dataMat)
-    convDataMat, reconDataMat = pca(dataMat, topNFeats=20)
-    show_picture(dataMat, convDataMat, reconDataMat)
+    lowDataMat, reconDataMat = pca(dataMat, topNFeats=20)
+    print(np.shape(lowDataMat))
+    show_picture(dataMat, reconDataMat, lowDataMat)
 
 
 if __name__ == '__main__':
