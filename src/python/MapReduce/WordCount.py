@@ -35,14 +35,14 @@ class MapReduce():
 
         groups={}
         for key, group in groupby(sorted(intermediate, key=lambda x:x[0]), key=lambda x:x[0]):
-            groups[key] = [y for x, y in group.items()]
+            groups[key] = [y for x, y in group]
 
         return [reducer(key, value) for key, value in groups.items()]
 
 class WordCount():
     __doc__ = '''提高词频统计，自定义mapper和reducer'''
 
-    def mapper(key, value):
+    def mapper(self, key, value):
         """mapper(自定义mapper函数，统计文件key中文本value内单词，每个单词记为(word, 1))
 
         Args:
@@ -53,9 +53,9 @@ class WordCount():
             返回统计的词频列表，每个单词单独返回，不合并。如This cut dog. 返回[('this',1), ('cute',1), ('dog',1)]
         """
 
-        return [(word,1) for word in rm_punc(value.lower()).split()]
+        return [(word,1) for word in self.rm_punc(value.lower()).split()]
 
-    def reducer(key, values):
+    def reducer(self, key, values):
         """reducer(自创建reducer方法，将同词词频合并)
 
         Args:
@@ -67,7 +67,7 @@ class WordCount():
         """
         return (key, sum(values))
 
-    def rm_punc(content):
+    def rm_punc(self, content):
         """rm_prun(去除文本内标点符号)
 
         Args:
