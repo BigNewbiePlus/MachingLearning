@@ -5,5 +5,5 @@
 1.2 [频繁项加速挖掘算法(Apriori改进)FP-Growth](/src/python/FP_Growth/FP-Growth.py)<br>
 1.3 [数据降维PCA算法](/src/python/PCA/pca.py)<br>
 1.4 [数据降维SVD算法](/src/python/SVD/svd.py)<br>
-1.5 [MapReduce实现词频统计](/src/python/MapReduce/WordCount.py)
+1.5 [MapReduce实现词频统计](/src/python/MapReduce/WordCount.py)<br>
 1.6 [PageRank实现，包括迭代法实现和MapReduce实现](/src/python/PageRank/)

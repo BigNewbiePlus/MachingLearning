@@ -6,7 +6,6 @@ author@BigNewbie
 功能: 基于迭代法求解网页PR值
 参考文献: PageRank算法的复杂程度怎么样？https://www.zhihu.com/question/19555545?utm_campaign=rss&utm_medium=rss&utm_source=rss&utm_content=title
           PageRank算法--从原理到实现  http://blog.csdn.net/rubinorth/article/details/52215036
-
 '''
 print(__doc__)
 
@@ -41,17 +40,17 @@ class PRIterator:
         # 初始化PR值
         PR = dict.fromkeys(nodes, 1/graph_size)
         damping_value = (1-self.damping_factor)/graph_size
-        change = 0
 
         # 迭代
         for i in range(self.max_iterations):
+            change = 0
             # 遍历每个节点，求解PR值
             for node in nodes:
                 rank = 0
                 for inciNode in digraph.incidents(node):
                     rank += self.damping_factor*PR[inciNode]/len(digraph.neighbors(inciNode))
                 rank += damping_value
-                chang += abs(PR[node]-rank)
+                change += abs(PR[node]-rank)
                 PR[node]=rank
 
             # 判断是否终止
@@ -78,11 +77,10 @@ def main():
     dg.add_edge(("B", "E"))
     dg.add_edge(("E", "A"))
 
-    pr = PRIterators(dg)
+    pr = PRIterator(dg)
     PR = pr.page_rank()
 
     print("The final page rank is:\n", PR)
 
 if __name__ == '__main__':
     main()
-
