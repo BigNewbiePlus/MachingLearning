@@ -20,25 +20,19 @@ def datingfile2matrix(filepath):
         filepath 约会数据信息
 
     Returns:
-        data,label 约会数据和标签
+        mat_data, label 约会数据和标签
     '''
     f = open(filepath)
-    m = len(f.readlines())
 
     # 分别存储约会数据和类别
-    mat_data = np.zeros((m,3))
-    label = np.zeros(m)
+    data = []
+    label = []
 
-    print(f.readlines())
-    index = 0
     for line in f.readlines():
         res = line.strip().split('\t')
-        print(res)
-        mat_data[index,:] = res[0:3]
-        label[index] = int(res[-1])
-        index += 1
-    print(mat_data)
-    return mat_data, label
+        data.append([float(res[i]) for i in range(3)])
+        label.append(int(res[-1]))
+    return np.array(data), np.array(label)
 
 def norm_matrix(data_mat):
     '''norm_matrix(对二维矩阵正则化，列为特征)
@@ -76,7 +70,7 @@ def knn_classify(inp, data, label, k):
     # m记录样例数据个数
     m = data.shape[0]
     diff = data - np.tile(inp, (m, 1))
-    dist = np.mean(diff**2, axis=1)
+    dist = np.sum(diff**2, axis=1)
 
     # 获取距离排序下标
     sort_index = np.argsort(dist)[0:k]
