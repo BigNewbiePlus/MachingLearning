@@ -18,6 +18,8 @@ print(__doc__)
 import numpy as np
 import re
 import feedparser
+import random
+import collections
 
 def createBoardMessage():
     '''loadDataSet(自创留言版言论数据集)
@@ -30,7 +32,7 @@ def createBoardMessage():
     postingList = [['my', 'dog', 'has', 'flea', 'problems', 'help', 'please'], #[0,0,1,1,1......]
                    ['maybe', 'not', 'take', 'him', 'to', 'dog', 'park', 'stupid'],
                    ['my', 'dalmation', 'is', 'so', 'cute', 'I', 'love', 'him'],
-                   ['stop', 'posting', 'stupid', 'worthless', 'gar e'],
+                   ['stop', 'posting', 'stupid', 'worthless', 'garbage'],
                    ['mr', 'licks', 'ate', 'my', 'steak', 'how', 'to', 'stop', 'him'],
                    ['quit', 'buying', 'worthless', 'dog', 'food', 'stupid']]
 
@@ -220,7 +222,7 @@ def abuseTest():
     testVec = wordOfSet2Vec(vocabList, testEntry)
     print(testEntry, "classifid as : ", classifyNB(testVec, pAbuse, P0Vec, P1Vec))
 
-    testEntry = ['stupied', 'garbage']
+    testEntry = ['stupid', 'garbage']
     testVec = wordOfSet2Vec(vocabList, testEntry)
     print(testEntry, "classifid as : ", classifyNB(testVec, pAbuse, P0Vec, P1Vec))
 
@@ -239,7 +241,7 @@ def textParse(text):
         document 去除标点符号的切分文本
     '''
 
-    listOfTokens = re.split('\W*', text)
+    listOfTokens = re.split(r'\W*', text)
     return [token.lower() for token in listOfTokens if len(token)> 2]
 
 def spamTest():
@@ -251,20 +253,20 @@ def spamTest():
 
     for i in range(1, 26):
         # 读取25个垃圾邮件
-        bigString = open('../../../data/NaiveBayes/email/spam/%d.txt'%i).read()
-        print(bigString)
-        #wordList = textParse(open('../../../data/NaiveBayes/email/spam/%d.txt'%i).read())
-        #docList.append(wordList)
-        #labelList.append(1)
+        wordList = textParse(open('../../../data/NaiveBayes/email/spam/%d.txt'%i).read())
+        docList.append(wordList)
+        labelList.append(1)
         # 读取25个正常邮件
-        #wordList = textParse(open('../../../data/NaiveBayes/email/ham/%d.txt'%i).read())
-        #docList.append(wordList)
-        #labelList.append(0)
+        wordList = textParse(open('../../../data/NaiveBayes/email/ham/%d.txt'%i).read())
+        docList.append(wordList)
+        labelList.append(0)
 
     # 创建词汇
     vocabList = createVocabList(docList)
 
-    randIndex = np.shuffle(np.range(50))
+    randIndex = [i for i in range(50)]
+    random.shuffle(randIndex)
+
     testIndex = randIndex[:10]
     trainIndex = randIndex[10:]
 
@@ -286,11 +288,27 @@ def spamTest():
 
     print('the error count is: %d'%error_num)
     print("test number:%d"%test_num)
-    print("test error :%lf"%float(error_num)/test_num)
+    print("test error :%lf"%(error_num/test_num))
 
 
 # -------------------------------------------------------------------------------------------
 # 项目案例3： 使用朴素贝叶斯从个人广告中获取区域倾向
+
+def getTopNWords(fullText, N=30):
+    '''getTopNWords(获取文本中词频排前N的词)
+
+    Args:
+        fullText 全部词汇文本
+        N 词频前N
+
+    Returns:
+        词频前N的词汇列表
+
+    '''
+
+    TopNCnt = collections.Counter(fullText).most_common(N)
+
+    return [value[0] for value in TopNCnt]
 
 def adRSSTest():
     '''loadDataFromRSS(从RSS源获取个人广告内容, RSS源分别为http://newyork.craigslist.org/stp/index.rss
@@ -305,21 +323,33 @@ def adRSSTest():
 
     minLen = min(len(ny_feed1['entries']), len(sf_feed0['entries']))
 
+    fullText = []
     for i in range(minLen):
         wordList = textParse(ny_feed1['entries'][i]['summary'])
         docList.append(wordList)
+        fullText.extend(wordList)
         labelList.append(1)
 
         wordList = textParse(sf_feed0['entries'][i]['summary'])
         docList.append(wordList)
+        fullText.extend(wordList)
         labelList.append(0)
 
     vocabList = createVocabList(docList)
+    topNWords = getTopNWords(fullText, 30)
 
-    randIndex = np.shuffle(np.range(len(docList)))
+    for word in topNWords:
+        vocabList.remove(word)
+
+    print(np.mat(docList))
+    print(np.mat(labelList))
+    print(vocabList)
+    numDoc = len(docList)
+    randIndex = [i for i in range(numDoc)]
+    random.shuffle(randIndex)
 
     testIndex = randIndex[0:20]
-    trainIndex = randIdnex[20:]
+    trainIndex = randIndex[20:]
 
     trainMatrix = []
     trainLabel = []
@@ -328,20 +358,20 @@ def adRSSTest():
         trainMatrix.append(wordVec)
         trainLabel.append(labelList[index])
 
-    pAbuse, P0Vec, P1Vec = trainNB0(trainMatrix, trainlabel)
+    pAbuse, P0Vec, P1Vec = trainNB0(trainMatrix, trainLabel)
 
     error_num = 0
     test_num = len(testIndex)
 
     for index in testIndex:
         wordVec = wordOfSet2Vec(vocabList, docList[index])
-        if classifyNB(wordVec, pAbuse, P0Vec, P1Vec) == labelList[index]:
-            error_num += 0
+        if classifyNB(wordVec, pAbuse, P0Vec, P1Vec) != labelList[index]:
+            error_num +=1
 
 
     print('the error count is: %d'%error_num)
     print("test number:%d"%test_num)
-    print("test error :%lf"%float(error_num)/test_num)
+    print("test error :%lf"%(error_num/test_num))
 
 
 # 测试
