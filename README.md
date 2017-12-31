@@ -10,5 +10,5 @@
 1.7 [KNN实现，包含约会实例和手写体识别实例](/src/python/KNN/knn.py)<br>
 1.8 [DecisionTree实现，包括是否鱼类判断和隐形眼镜类别判断两个案例和决策树图形实现](src/python/DecisionTree/)<br>
 1.9 [NaiveBayes实现，包括屏蔽侮辱性词汇、垃圾邮件过滤和从广告中获取区域词汇倾向](src/python/NaiveBayes/)<br>
-2.0 [Logistic回归模型实现: 简单分类+疝气病预测病马死亡情况+三种随机梯度上升算法+权值随迭代变化情况](src/python/DecisionTree/)<br>
+2.0 [Logistic回归模型实现: 简单分类+疝气病预测病马死亡情况+三种随机梯度上升算法+权值随迭代变化情况](src/python/LR/)<br>
 
