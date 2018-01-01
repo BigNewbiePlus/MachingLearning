@@ -6,6 +6,7 @@ created on 2017/12/31
 @author BigNewbie
 参考文献:   支持向量机通俗导论（理解SVM的三层境界）http://blog.csdn.net/v_july_v/article/details/7624837
             【机器学习实战】第6章 支持向量机 http://www.cnblogs.com/jiangzhonglian/p/7690033.html
+功能：  完整的SVM算法
 '''
 print(__doc__)
 
@@ -16,7 +17,7 @@ class OptStruct:
     '''
     SVM数据结构
     '''
-    def __init__(self, dataMat, labelMat, C, toler):
+    def __init__(self, dataMat, labelMat, C, toler, kTup):
         self.dataMat = dataMat
         self.labelMat = labelMat
         self.C = C
@@ -26,6 +27,38 @@ class OptStruct:
         self.b = 0
         self.eCaches = np.mat(np.zeros((self.m, 2)))
 
+        self.K = np.mat(np.zeros((self.m, self.m)))
+
+        for k in range(self.m):
+            self.K[:,k] = kernelTrans(self.dataMat, self.dataMat[k,:], kTup)
+
+def kernelTrans(dataMat, dataK, kTup):
+    '''
+    kernel转化，根据核函数种类转换
+
+    Args:
+        dataMat 原数据集
+        dataK  第k行数据
+        kTup 二元组，存储核函数信息
+
+    Returns:
+        所有数据和第k行数据的核函数 Kik
+    '''
+
+    m, n = np.shape(dataMat)
+
+    K = np.zeros((m, 1))
+    if kTup[0] == 'lin':
+        K = dataMat * dataK.T
+    elif kTup[0] == 'rbf':
+        for i in range(m):
+            deltaK = dataMat[i,:]-dataK
+            K[i] = deltaK * deltaK.T
+        K = np.exp(K / (-2*kTup[1]**2))
+    else:
+        raise NameError("the kernel is not recognized")
+
+    return K
 
 def loadDataSet(filename):
     '''
@@ -100,7 +133,7 @@ def calEk(os, k):
         Ek 预测值和实际值的差值，f(xk)-yk
     '''
 
-    yxk = np.multiply(os.alphas, os.labelMat).T * (os.dataMat * os.dataMat[k,:].T) + os.b
+    yxk = np.multiply(os.alphas, os.labelMat).T * os.K[:,k] + os.b
     Ek = yxk - os.labelMat[k]
     return Ek
 
@@ -126,7 +159,7 @@ def selectJ(os, i, Ei):
 
     validEcacheList = np.nonzero(os.eCaches[:,0])[0]
 
-    if False:#len(validEcacheList) > 1:
+    if len(validEcacheList) > 1:
         for j in validEcacheList:
             if j==i:
                 continue
@@ -187,7 +220,7 @@ def innerL(os, i):
             L = max(0, os.alphas[j]+os.alphas[i] - os.C)
             H = min(os.C, os.alphas[j]+os.alphas[i])
 
-        eta = 2*os.dataMat[i,:] * os.dataMat[j,:].T - os.dataMat[i,:] * os.dataMat[i,:].T - os.dataMat[j,:]*os.dataMat[j,:].T
+        eta = 2*os.K[i, j] - os.K[i, i] - os.K[j, j]
 
         os.alphas[j] -= os.labelMat[j] * (Ei-Ej) / eta
 
@@ -195,15 +228,14 @@ def innerL(os, i):
         updateEk(os, j)
 
         if abs(os.alphas[j] - alphaJold)< 0.00001:
-            print('j not moving enough')
+            #print('j not moving enough')
             return 0
 
         os.alphas[i] += os.labelMat[i]*os.labelMat[j]*(alphaJold-os.alphas[j])
         updateEk(os, i)
 
-        b1 = os.b - Ei + os.labelMat[i]*(alphaIold-os.alphas[i])*(os.dataMat[i,:]*os.dataMat[i,:].T) + os.labelMat[j] * (alphaJold-os.alphas[j])*(os.dataMat[j,:]*os.dataMat[i,:].T)
-        b2 = os.b - Ej + os.labelMat[i]*(alphaIold-os.alphas[i])*(os.dataMat[i,:]*os.dataMat[j,:].T) + os.labelMat[j] * (alphaJold-os.alphas[j])*(os.dataMat[j,:]*os.dataMat[j,:].T)
-
+        b1 = os.b - Ei + os.labelMat[i]*(alphaIold-os.alphas[i]) * os.K[i, i] + os.labelMat[j] * (alphaJold-os.alphas[j]) * os.K[j, i]
+        b2 = os.b - Ej + os.labelMat[i]*(alphaIold-os.alphas[i]) * os.K[i, j] + os.labelMat[j] * (alphaJold-os.alphas[j]) * os.K[j, j]
 
         if os.alphas[i] >0 and os.alphas[i]<os.C:
             os.b = b1
@@ -214,7 +246,7 @@ def innerL(os, i):
         return 1
     return 0
 
-def smoP(dataArr, labelArr, C, toler, maxIter):
+def smoP(dataArr, labelArr, C, toler, maxIter, kTup=('lin')):
     '''
     简单的smo算法
 
@@ -233,20 +265,20 @@ def smoP(dataArr, labelArr, C, toler, maxIter):
     dataMat = np.mat(dataArr)
     labelMat = np.mat(labelArr).transpose()
 
-    os = OptStruct(dataMat, labelMat, C, toler)
+    os = OptStruct(dataMat, labelMat, C, toler, kTup)
 
     iter = 0
-    alphaPairChanged = 0
+    alphaPairsChanged = 0
     entireSet = True
 
-    while iter < maxIter :
+    while iter < maxIter and (alphaPairsChanged>0 or entireSet):
 
         alphaPairsChanged = 0
 
         if entireSet:
             for i in range(os.m):
                 alphaPairsChanged += innerL(os, i)
-                print("fullset, iter:%d, i:%d, pairs changed %d"%(iter, i, alphaPairsChanged))
+                #print("fullset, iter:%d, i:%d, pairs changed %d"%(iter, i, alphaPairsChanged))
             iter += 1
 
         else:
@@ -344,14 +376,167 @@ def plot_SVM(dataArr, labelArr, alphas, ws, b):
 
     plt.show()
 
+def testRBF(k1=1.3):
+    '''
+    测试RBF核函数, k1为方差
+    '''
+
+    dataArr, labelArr = loadDataSet('../../../data/SVM/testSetRBF.txt')
+
+    alphas, b = smoP(dataArr, labelArr, 200, 0.0001, 10000, ('rbf', k1))
+
+    dataMat = np.mat(dataArr)
+    labelMat = np.mat(labelArr).transpose()
+
+    m, n = np.shape(dataMat)
+
+    svIn = np.nonzero(alphas>0)[0]
+    svVe = dataMat[svIn]
+    svLa = labelMat[svIn]
+    svAl = alphas[svIn]
+
+    error = 0
+    for i in range(m):
+        Ki = kernelTrans(svVe, dataMat[i,:], ('rbf',k1))
+        predict = np.multiply(svLa, svAl).T * Ki + b
+        if np.sign(predict) != np.sign(labelMat[i]):
+            error+=1
+    print('train error number:%d, total:%d, error:%f'%(error, m, error/m))
+
+    # test error
+    dataArr, labelArr = loadDataSet('../../../data/SVM/testSetRBF2.txt')
+
+    dataMat = np.mat(dataArr)
+    labelMat = np.mat(labelArr).transpose()
+
+    m, n = np.shape(dataMat)
+
+    error = 0
+    for i in range(m):
+        Ki = kernelTrans(svVe, dataMat[i,:], ('rbf',k1))
+        predict = np.multiply(svLa, svAl).T * Ki + b
+        if np.sign(predict) != np.sign(labelMat[i]):
+            error+=1
+    print('test error number:%d, total:%d, error:%f'%(error, m, error/m))
+
+def img2vec(filename):
+    '''
+    读取图片文件，转化为图片向量，存储矩阵为32*32，返回为1*1024
+
+    Args:
+        filename 文件路径
+
+    Returns:
+        图片向量 1*1024
+    '''
+
+    fr = open(filename)
+
+    vec = np.zeros((1,1024))
+    for i in range(32):
+        lineStr = fr.readline()
+        for j in range(32):
+            vec[0, i*32+j] = int(lineStr[j])
+
+    return vec
+
+def loadImages(dirName):
+    '''
+    加载图片
+
+    Args:
+        dirName 文件夹路径
+
+    Returns:
+        imgsVec 图片向量
+    '''
+
+    from os import listdir
+
+    hwLabels = []
+    trainingFileList  = listdir(dirName)
+
+    m = len(trainingFileList)
+
+    imgsVec = np.zeros((m, 1024))
+
+    for i in range(m):
+        filename = trainingFileList[i]
+        classLabel = int(filename.split('_')[0])
+        if classLabel == 1:
+            hwLabels.append(1)
+        else:
+            hwLabels.append(-1)
+        imgsVec[i,:] = img2vec(dirName+'/'+filename)
+
+    return imgsVec, hwLabels
+
+def testDigits(kTup=('rbf', 1.3)):
+    '''
+    测试手写体
+
+    Args:
+        使用的核函数信息
+    '''
+
+    dataArr, labelArr = loadImages('../../../data/SVM/trainingDigits')
+
+    alphas, b = smoP(dataArr, labelArr, 200, 0.0001, 10000, kTup)
+
+    dataMat = np.mat(dataArr)
+    labelMat = np.mat(labelArr).transpose()
+
+    m, n = np.shape(dataMat)
+
+    svIn = np.nonzero(alphas>0)[0]
+    svVe = dataMat[svIn]
+    svLa = labelMat[svIn]
+    svAl = alphas[svIn]
+
+    error = 0
+    for i in range(m):
+        Ki = kernelTrans(svVe, dataMat[i,:], kTup)
+        predict = np.multiply(svLa, svAl).T * Ki + b
+        if np.sign(predict) != np.sign(labelMat[i]):
+            error+=1
+    print('train error number:%d, total:%d, error:%f'%(error, m, error/m))
+
+    # test error
+    dataArr, labelArr = loadImages('../../../data/SVM/testDigits')
+
+    dataMat = np.mat(dataArr)
+    labelMat = np.mat(labelArr).transpose()
+
+    m, n = np.shape(dataMat)
+
+    error = 0
+    for i in range(m):
+        Ki = kernelTrans(svVe, dataMat[i,:], kTup)
+        predict = np.multiply(svLa, svAl).T * Ki + b
+        if np.sign(predict) != np.sign(labelMat[i]):
+            error+=1
+    print('test error number:%d, total:%d, error:%f'%(error, m, error/m))
+
+
+
 if __name__ == '__main__':
 
-    dataArr, labelArr = loadDataSet('../../../data/SVM/testSet.txt')
+    # 线性测试
+    #dataArr, labelArr = loadDataSet('../../../data/SVM/testSet.txt')
 
-    alphas, b = smoP(dataArr, labelArr, 0.6, 0.001, 40)
+    #alphas, b = smoP(dataArr, labelArr, 0.6, 0.001, 40, ('lin', 0))
 
+    #ws = calWs(alphas, dataArr, labelArr)
 
-    ws = calWs(alphas, dataArr, labelArr)
+    #plot_SVM(dataArr, labelArr, alphas, ws, b)
 
-    plot_SVM(dataArr, labelArr, alphas, ws, b)
+    # RBF测试
+    testRBF(0.8)
 
+    # 手写体时别测试RBF
+    testDigits(('rbf', 0.1))
+    testDigits(('rbf', 5))
+    testDigits(('rbf', 10))
+    testDigits(('rbf', 50))
+    testDigits(('rbf', 100))
+    testDigits(('lin', 0))
