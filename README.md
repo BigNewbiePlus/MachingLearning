@@ -13,4 +13,5 @@
 2.0 [Logistic回归模型实现: 简单分类+疝气病预测病马死亡情况+三种随机梯度上升算法+权值随迭代变化情况](src/python/LR/)<br>
 2.1 [RandomForest随机森林实现: 雷达信号判断](src/python/RF/randomForest.py)<br>
 2.2 [adaBoost算法实现，预测病马死亡情况](src/python/AdaBoost/adaboost.py)<br>
+2.3 [Linear Regression算法实现, regression, lwlr, ridgeRegression实现](src/python/LinearRegression/linear_regression.py)<br>
 
