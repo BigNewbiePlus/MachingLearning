@@ -25,7 +25,7 @@ def loadDataSet(filename):
         labelArr 数据标签集
     '''
 
-    feat_n = len(open(filename).readline().split('\t'))
+    feat_n = len(open(filename).readline().split('\t')) - 1
 
     dataArr, labelArr = list(), list()
 
@@ -92,13 +92,13 @@ def lwlr(testPoint, dataArr, labelArr, k=1.0):
 
     for i in range(m):
 
-        diff = testPoint - dataMat[j,:]
+        diff = testPoint - dataMat[i,:]
 
-        W[j, j] = np.exp(diff*diff.T/(-2.0*k**2))
+        W[i, i] = np.exp(diff*diff.T/(-2.0*k**2))
 
     xTx = dataMat.T*(W * dataMat)
 
-    if linalg.det(xTx) == 0.0:
+    if np.linalg.det(xTx) == 0.0:
         print('This matrix is singular , cannt do inverse')
         return
 
@@ -106,7 +106,7 @@ def lwlr(testPoint, dataArr, labelArr, k=1.0):
 
     return testPoint * w
 
-def lwlrArr(testArr, dataArr, labelArr, k=1.0):
+def lwlrTest(testArr, dataArr, labelArr, k=1.0):
     '''
     Description lwlr测试
 
@@ -124,7 +124,7 @@ def lwlrArr(testArr, dataArr, labelArr, k=1.0):
 
     ys = np.zeros(m)
 
-    for i in ranges(m):
+    for i in range(m):
         ys[i] = lwlr(testArr[i], dataArr, labelArr, k)
 
     return  ys
@@ -143,7 +143,7 @@ def rssErrors(actuals, predicts):
 
     return ((actuals-predicts)**2).sum()
 
-def ridgeRegression(dataArr, labelArr, lam=0.2):
+def ridgeRegression(dataMat, labelMat, lam=0.2):
     '''
     Description 系数lam下的岭回归
 
@@ -156,16 +156,13 @@ def ridgeRegression(dataArr, labelArr, lam=0.2):
         w 岭回归权值
     '''
 
-    dataMat = np.array(dataArr)
-    labelMatp = np.array(labelArr).T
-
     m, n = np.shape(dataMat)
 
     xTx = dataMat.T * dataMat
 
     denom = xTx + np.eye(n)*lam
 
-    if linalg.det(denom) == 0.0:
+    if np.linalg.det(denom) == 0.0:
         print 'this matrix is singular, cannt do inverse'
         return
 
@@ -179,16 +176,16 @@ def ridgeTest(dataArr, labelArr):
     '''
 
     dataMat = np.mat(dataArr)
-    labelMat = np.mat(labelArr)
+    labelMat = np.mat(labelArr).T
 
     numTest = 30
 
-    wMat = list()
+    wMat = np.zeros((numTest, np.shape(dataMat)[1]))
     for i in range(numTest):
         ws = ridgeRegression(dataMat, labelMat, np.exp(i-10))
-        wMat.append(ws.T)
+        wMat[i,:] = ws.T
 
-    return np.mat(wMat)
+    return wMat
 
 def regression1():
     '''
@@ -206,13 +203,12 @@ def regression1():
 
     ax = fig.add_subplot(111)
 
-    print dataMat
-    print labelArr
-    ax.scatter(dataMat[:,1].flatten(), labelArr)
+    ax.scatter(dataMat[:,1].flatten().A[0], labelArr, s=2, c='r')
 
     xCopy = dataMat.copy()
     xCopy.sort(0)
-    ys = xCopy * ws
+
+    ys = xCopy * w
 
     ax.plot(xCopy[:,1], ys)
 
@@ -232,13 +228,15 @@ def regression2():
 
     fig = plt.figure()
 
-    ax.scatter(dataMat[:,1].flatten(), labelArr)
+    ax = fig.add_subplot(111)
 
-    xCopy = dataMat.copy()
-    xCopy.sort(0)
-    ys = xCopy * ws
+    xs = dataMat[:,1].flatten().A[0]
 
-    ax.plot(xCopy[:,1], ys)
+    ax.scatter(xs, labelArr, s=2, c='r')
+
+    index = np.argsort(xs)
+
+    ax.plot(xs[index], ys[index])
 
     plt.show()
 
@@ -248,18 +246,20 @@ def regression3():
     Description 岭回归测试
     '''
 
-    dataArr, labelArr = loadDataSets('../../../data/abaline.txt')
+    dataArr, labelArr = loadDataSet('../../../data/abalone.txt')
 
     ridgeWeights = ridgeTest(dataArr, labelArr)
 
-    fig = fig.figure()
+    fig = plt.figure()
 
     ax = fig.add_subplot(111)
 
     ax.plot(ridgeWeights)
+
     plt.show()
 
 if __name__ == '__main__':
-    regression1()
+    #regression1()
     #regression2()
+    regression3()
 
