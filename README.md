@@ -14,4 +14,8 @@
 2.1 [RandomForest随机森林实现: 雷达信号判断](src/python/RF/randomForest.py)<br>
 2.2 [adaBoost算法实现，预测病马死亡情况](src/python/AdaBoost/adaboost.py)<br>
 2.3 [Linear Regression算法实现, regression, lwlr, ridgeRegression实现](src/python/LinearRegression/linear_regression.py)<br>
+2.4 [Regression Tree算法实现](src/python/RegressionTree/regression_tree.py)<br>
+2.4 [Regression Tree算法实现](src/python/RegressionTree/regression_tree.py)<br>
 
+# 计算广告
+1.1 [Follow The Regularized Leader算法实现](src/python/FTRL/ftrl.py)<br>
