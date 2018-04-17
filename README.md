@@ -19,3 +19,6 @@
 
 # 计算广告
 1.1 [Follow The Regularized Leader算法实现](src/python/FTRL/ftrl.py)<br>
+
+# 基础功能
+1.1 [Thrift服务,跨语言传输](src/python/Thrift)
