@@ -1,0 +1,6 @@
+# 屏蔽目录
+bin/
+.pytest_cache/
+
+# 屏蔽文件
+*.pyc
